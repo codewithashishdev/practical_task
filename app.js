@@ -1,12 +1,22 @@
-require('dotenv').config()
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 3000
+const express = require("express")
+const bodyParser = require("body-parser");
+const path = require("path"); 
+const cors = require("cors");
+const contact = require("./configs/constant");
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const app = express();
+const port = contact.PORT || 3000 ;
+
+const route = require("./module/v1/index");
+
+app.use(cors());
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use("/api/v1/",route);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`running on port ${port}`);
+});
