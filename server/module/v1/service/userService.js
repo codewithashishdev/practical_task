@@ -26,18 +26,15 @@ const userCreate = async (data) => {
 const UserWithToken = async (user) => {
     const token = await jwt.sign(
         {
-          id: user.id,
-          name: user.username,
-          email: user.email,
+            id: user.id,
+            name: user.username,
+            email: user.email,
         },
-        constant.SECREATE,
+        constant.SECRETE,
         {
-          expiresIn: constant.EXP
+            expiresIn: constant.EXP
         });
-    
-      user.password = undefined;
-      user.token = token;
-      return user;
+    return token;
 };
 
 module.exports = {

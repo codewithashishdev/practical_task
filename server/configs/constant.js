@@ -15,11 +15,7 @@ module.exports ={
         logging: process.env.LOGGING
     },
 
-    // SALT: process.env.SALT,
     EXP: process.env.EXP,
-    SECREATE: process.env.SECREATE,
+    SECRETE: process.env.SECRETE,
 
-    // //send mail authentication
-    // USER: process.env.EMAIL_USER,
-    // PASS: process.env.EMAIL_PASS,
 };

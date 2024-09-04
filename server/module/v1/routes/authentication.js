@@ -4,6 +4,7 @@ const router = express.Router();
 
 const authController = require("../controller/authController");
 const { signupValidation, loginValidation } = require('../validation/validation');
+const { verifyJWTToken } = require('../middleware/middleware');
 
 router.post("/login", loginValidation, authController.login);
 
@@ -13,6 +14,6 @@ router.post("/signup", signupValidation, authController.signup);
 
 
 // profile user
-router.post("/profile", authController.profile)
+router.get("/profile", verifyJWTToken, authController.profile)
 
 module.exports = router;

@@ -12,6 +12,7 @@ const sendResponse = async (res, statusCode, status, message, data = null) => {
 };
 
 const serverErrorResponse = async (res, data = {}) => {
+    console.log(data)
     return res.status(500).send({
         status: false,
         status_code: 500,

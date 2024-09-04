@@ -24,7 +24,7 @@ const login = async (req, res, next) => {
         }
         const attributes = ["id", "username", "password", "email"];
 
-        const userDetails = await userService.userDetails(condition, attributes);
+        let userDetails = await userService.userDetails(condition, attributes);
         if (!userDetails) {
             return sendResponse(res, 403, false, general.userNotFound, null);
         };
@@ -35,7 +35,13 @@ const login = async (req, res, next) => {
         };
 
         const userWithToken = await userService.UserWithToken(userDetails);
-        return sendResponse(res, 200, true, general.userLoginSuccess, userWithToken);
+        userDetails = {
+            username: userDetails.username,
+            email: userDetails.email,
+            token : userWithToken
+        }
+        req.session.token = userWithToken;
+        return sendResponse(res, 200, true, general.userLoginSuccess, userDetails);
 
     } catch (error) {
         return serverErrorResponse(res, error.message);
@@ -91,7 +97,16 @@ const signup = async (req, res, next) => {
  * User Profile API
  */
 const profile = async (req, res) => {
-    res.send("profile")
+    try {
+        let condition = { email: req.user.email };
+        let attributes = ['username', 'email'];
+
+        const userDetails = await userService.userDetails(condition, attributes);
+        return sendResponse(res, 200, true, general.success, userDetails);
+
+    } catch (error) {
+        return serverErrorResponse(res, error.message);
+    }
 };
 
 module.exports = {

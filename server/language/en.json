@@ -9,6 +9,7 @@
     "signed_success":"User signed up successfully",
     "userNotFound":"User not found",
     "incorrectPassword": "email or password is incorrect.",
-    "userLoginSuccess":"User login successful"
+    "userLoginSuccess":"User login successful",
+    "missing_jwt_token": "Missing jwt token"
   }
 }
