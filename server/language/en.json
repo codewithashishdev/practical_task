@@ -1,0 +1,14 @@
+{
+  "general": {
+    "already_exists":"User is already exists please create a new one",
+    "server_error": "Something went wrong. Please try again later.",
+    "success": "Success",
+    "failed": "Failed",
+    "invalid_input": "Invalid Input",
+    "unauthorized_user": "Unauthorized operation.",
+    "signed_success":"User signed up successfully",
+    "userNotFound":"User not found",
+    "incorrectPassword": "email or password is incorrect.",
+    "userLoginSuccess":"User login successful"
+  }
+}
