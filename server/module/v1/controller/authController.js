@@ -4,6 +4,7 @@ const userService = require("../service/userService");
 const { validationResult } = require('express-validator');
 
 const bcrypt = require('bcrypt');
+const path = require('path');
 
 /**
  * Login API
@@ -68,6 +69,19 @@ const signup = async (req, res, next) => {
     try {
         let { username, email, password } = req.body;
 
+        let profilePictureUrl = null;
+        // Handle profile picture upload
+        if (req.files && req.files.profile_picture) {
+
+            const profilePicture = req.files.profile_picture;
+            const uploadPath = path.join(__dirname, '../../../uploads', `${Date.now()}_${profilePicture.name}`);
+
+            await profilePicture.mv(uploadPath);
+
+            // Store the relative path in the database
+            profilePictureUrl = `${req.protocol}://${req.get('host')}/uploads/${path.basename(uploadPath)}`;
+        }
+
         let condition = { email: email };
         let attributes = ['id', 'username', 'email'];
 
@@ -82,7 +96,8 @@ const signup = async (req, res, next) => {
         const userObj = {
             username: username,
             email: email,
-            password: hashedPassword
+            password: hashedPassword,
+            profile_picture: profilePictureUrl,
         };
         // Save the user with the hashed password
         const createUser = await userService.userCreate(userObj);
@@ -99,7 +114,7 @@ const signup = async (req, res, next) => {
 const profile = async (req, res) => {
     try {
         let condition = { email: req.user.email };
-        let attributes = ['username', 'email'];
+        let attributes = ['username', 'email', 'profile_picture'];
 
         const userDetails = await userService.userDetails(condition, attributes);
         return sendResponse(res, 200, true, general.success, userDetails);

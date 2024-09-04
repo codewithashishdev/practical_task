@@ -23,7 +23,7 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(500),
             },
             profile_picture: {
-                type: DataTypes.STRING(500),
+                type: DataTypes.TEXT,
             },
             resetTokenExpiration: {
                 type: DataTypes.DATE,
