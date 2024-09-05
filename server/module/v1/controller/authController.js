@@ -5,6 +5,8 @@ const { validationResult } = require('express-validator');
 
 const bcrypt = require('bcrypt');
 const path = require('path');
+const NodeCache = require("node-cache");
+const myCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
 
 /**
  * Login API
@@ -23,6 +25,7 @@ const login = async (req, res, next) => {
             is_deleted: false,
             is_active: true
         }
+        myCache.set("details", condition);
         const attributes = ["id", "username", "password", "email"];
 
         let userDetails = await userService.userDetails(condition, attributes);

@@ -8,7 +8,7 @@ const sendResponse = async (res, statusCode, status, message, data = null) => {
         data: data,
     };
 
-    return res.status(statusCode).send(resObj);
+    return res.status(200).send(resObj);
 };
 
 const serverErrorResponse = async (res, data = {}) => {
